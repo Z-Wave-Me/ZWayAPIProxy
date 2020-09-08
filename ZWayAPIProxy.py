@@ -18,15 +18,9 @@ class Server(http.server.SimpleHTTPRequestHandler):
             if h in self.headers:
                 headers[h] = self.headers[h]
         
-        # emulate find - force non-local login
-        headers['ZBW_SESSID'] = 'anything'
-        
-        # for old systems add ZWAYSession header from cookie
-        if 'Cookie' in headers and 'ZWAYSession' not in headers:
-            ZWAYSessionCookie = list(filter(lambda c: c[0] == 'ZWAYSession', map(lambda c: c.split('='), headers['Cookie'].split(';'))))
-            if len(ZWAYSessionCookie):
-                headers['ZWAYSession'] = ZWAYSessionCookie[0][1]
-        
+        headers['Authentication Bearer'] = '04203c9a1e7822c95270e74d04056b622c1ffef56c/315f9f9e-c53a-7efc-0312-8fe6084100af'
+        headers['Authentication'] = 'Bearer: 04203c9a1e7822c95270e74d04056b622c1ffef56c/315f9f9e-c53a-7efc-0312-8fe6084100af'
+
         return headers
     
     def parseHeaders(self, r):
@@ -91,6 +85,6 @@ if __name__ == "__main__":
         REMOTE_SERVER = sys.argv[1]
     
     if len(sys.argv) > 2:
-        PORT = sys.argv[2]
+        PORT = int(sys.argv[2])
     
     Server.serve_forever(PORT, HTDOCS)
