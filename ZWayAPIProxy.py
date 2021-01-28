@@ -31,7 +31,7 @@ class Server(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
     
     def isLocal(self):
-        return not self.path.startswith("/ZAutomation") and not self.path.startswith("/ZWave.") and not self.path.startswith("/ZWaveAPI") and not self.path.startswith("/JS")
+        return not self.path.startswith("/ZAutomation") and not self.path.startswith("/ZWave") and not self.path.startswith("/ZWaveAPI") and not self.path.startswith("/JS")
     
     def do_GET(self):
         if self.isLocal():
